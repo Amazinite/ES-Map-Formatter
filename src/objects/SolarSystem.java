@@ -1,14 +1,12 @@
 package objects;
 
+import enums.Star;
 import utils.DataNode;
 import utils.DataObject;
 import utils.DataWriter;
 import utils.Format;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class SolarSystem extends DataObject {
 	private String name;
@@ -177,6 +175,38 @@ public class SolarSystem extends DataObject {
 		}
 		out.EndChild();
 		out.NewLine();
+	}
+
+	// Determine what this system's habitable range and planet orbital periods should be given the stars in the system.
+	public void CalibrateStarInfluence() {
+		// The sum of the habitable and mass of all stars in the system.
+		double sumHabitable = 0.;
+		double sumMass = 0.;
+		for(StellarObject object : objects) {
+			List<Optional<Star>> infoList = object.GetStarInfo();
+			for(Optional<Star> info : infoList)
+				if(info.isPresent()) {
+					sumHabitable += info.get().Habitable();
+					sumMass += info.get().Mass();
+				}
+		}
+		// TODO: Just add rouge brown dwarves as valid Star enums. This special handling is a holdover from my old formatter.
+		// Handle non-star objects (i.e. rouge brown dwarves)
+		if(sumHabitable == 0.)
+			sumHabitable = 10.;
+		// Use a higher mass than habitable range so that object periods aren't super high.
+		if(sumMass == 0.)
+			sumMass = 20. * 6.25;
+
+		habitable = sumHabitable;
+		for(StellarObject object : objects)
+			if(!object.IsStar())
+				object.CalibratePeriod(sumMass);
+	}
+
+	public void CalibrateArrivalDistance() {
+		hyperArrival = Math.max(500., Math.min(habitable, 5000.));
+		jumpArrival = hyperArrival;
 	}
 
 	private class Belt {

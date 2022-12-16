@@ -6,6 +6,7 @@ import utils.DataWriter;
 import utils.Format;
 
 public class Sprite extends DataObject {
+	private String name;
 	private String path;
 	private double scale;
 	public Sprite(DataNode node) {
@@ -15,6 +16,7 @@ public class Sprite extends DataObject {
 	@Override
 	public void Load(DataNode node) {
 		path = node.GetToken(1);
+		name = path.substring(path.indexOf("/") + 1);
 		for(DataNode child : node.GetChildren()) {
 			String key = child.GetToken(0);
 			if(key.equals("scale"))
@@ -31,5 +33,13 @@ public class Sprite extends DataObject {
 				out.WriteTokens("scale", Format.valueOf(scale));
 		}
 		out.EndChild();
+	}
+
+	public String GetPath() {
+		return path;
+	}
+
+	public String GetName() {
+		return name;
 	}
 }

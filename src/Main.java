@@ -34,7 +34,13 @@ public class Main {
 			}
 		}
 
-		// TODO: Add additional formatting options, like setting arrival distances or orbital periods on systems.
+		// Each class organizes object attributes when saving, but some attributes may need their values formatted.
+		// For example, the stars in a system influence the habitable range and arrival distance of the system, as
+		// well as the orbital periods of any objects.
+		for(DataObject system : systems.values()) {
+			((SolarSystem)system).CalibrateStarInfluence();
+			((SolarSystem)system).CalibrateArrivalDistance();
+		}
 
 		// Save out all the data objects. The maps containing the objects sorted the objects by name,
 		// and each object sorts and formats its own internals.

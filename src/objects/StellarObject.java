@@ -1,5 +1,6 @@
 package objects;
 
+import enums.Star;
 import utils.DataNode;
 import utils.DataObject;
 import utils.DataWriter;
@@ -8,6 +9,7 @@ import utils.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class StellarObject extends DataObject {
 	private String name = "";
@@ -58,5 +60,24 @@ public class StellarObject extends DataObject {
 				object.Save(out);
 		}
 		out.EndChild();
+	}
+
+	public List<Optional<Star>> GetStarInfo() {
+		List<Optional<Star>> info = new ArrayList<>();
+		info.add(Star.GetStar(sprite.GetName()));
+		for(StellarObject object : objects)
+			info.addAll(object.GetStarInfo());
+		return info;
+	}
+
+	public void CalibratePeriod(double mass) {
+		// Solar panels should act as though they have the same distance as a ringworld.
+		double d = sprite.GetName().contains("panel") ? 812. : distance;
+		period = Math.sqrt(Math.pow(d, 3) / mass);
+	}
+
+	public boolean IsStar() {
+		// Rouge brown dwarves are in the planet folder but act as stars.
+		return sprite.GetPath().contains("star/") || sprite.GetPath().contains("rouge");
 	}
 }

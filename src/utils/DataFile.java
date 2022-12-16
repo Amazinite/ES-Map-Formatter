@@ -44,7 +44,7 @@ public class DataFile {
 
 	private static List<String> TokenizeLine(String line) {
 		// If the line contains a comment, trim the comment off.
-		if (line.contains("#"))
+		if(line.contains("#"))
 			line = line.substring(0, line.indexOf('#'));
 		// Trim whitespace.
 		line = line.trim();
@@ -53,7 +53,7 @@ public class DataFile {
 		// Keep track of the start and end of each token.
 		int start = 0;
 		int end = 0;
-		while (end < line.length()) {
+		while(end < line.length()) {
 			// Get the first available character. Determine if it is a quote, backtick, or any other character.
 			char c = line.charAt(start);
 			boolean quoted = (c == '"');
@@ -65,7 +65,7 @@ public class DataFile {
 			// look for the next space.
 			end = line.indexOf((quoted ? '"' : backticked ? '`' : ' '), start);
 			// If no quote, backtick, or space could be found, then this is the last token in the line.
-			if (end == -1) {
+			if(end == -1) {
 				tokens.add(line.substring(start));
 				break;
 			}
