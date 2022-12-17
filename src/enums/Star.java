@@ -82,7 +82,8 @@ public enum Star {
 	NEUTRON("neutron", 100., 5000.),
 	WR("wr", 50000., 5000.),
 	SUPER_MASSIVE_BLACK_HOLE("black-hole", 100000., 100000.),
-	SMALL_BLACK_HOLe("small-black-hole", 10000., 10000.),
+	SMALL_BLACK_HOLE("small-black-hole", 10000., 10000.),
+	COAL_BLACK_HOLE("coal-black-hole", 10000., 10000.),
 
 	// Use a higher mass than habitable range so that object periods aren't super high.
 	BROWN_DWARF_L("browndwarf-l-rouge", 10., 20.),
