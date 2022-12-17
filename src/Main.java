@@ -36,7 +36,7 @@ public class Main {
 
 		// Each class organizes object attributes when saving, but some attributes may need their values formatted.
 		// For example, the stars in a system influence the habitable range and arrival distance of the system, as
-		// well as the orbital periods of any objects.
+		// well as the orbital periods of any objects. These values should therefore be set in stone.
 		for(DataObject system : systems.values()) {
 			((SolarSystem)system).CalibrateStarInfluence();
 			((SolarSystem)system).CalibrateArrivalDistance();

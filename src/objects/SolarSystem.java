@@ -92,7 +92,7 @@ public class SolarSystem extends DataObject {
 
 	@Override
 	public void Save(DataWriter out) {
-		out.WriteTokens(Arrays.asList("system", name));
+		out.WriteTokens("system", name);
 		out.BeginChild();
 		{
 			if(hidden)
@@ -190,13 +190,12 @@ public class SolarSystem extends DataObject {
 					sumMass += info.get().Mass();
 				}
 		}
-		// TODO: Just add rouge brown dwarves as valid Star enums. This special handling is a holdover from my old formatter.
-		// Handle non-star objects (i.e. rouge brown dwarves)
-		if(sumHabitable == 0.)
-			sumHabitable = 10.;
-		// Use a higher mass than habitable range so that object periods aren't super high.
-		if(sumMass == 0.)
-			sumMass = 20. * 6.25;
+		// Warn about systems with no known stars.
+		if(sumHabitable == 0. || sumMass == 0.) {
+			System.out.println("System \"" + name + "\" has no known stars.");
+			sumHabitable = Star.DEFAULT.Habitable();
+			sumMass = Star.DEFAULT.Mass();
+		}
 
 		habitable = sumHabitable;
 		for(StellarObject object : objects)

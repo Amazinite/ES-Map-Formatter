@@ -4,12 +4,13 @@ import java.util.Optional;
 
 public enum Star {
 	// Numbered comments denote the "radius" of the star.
-	// radius = Math.pow(mass / 0.25, 1./3.);
+	// The old system editor used a star's radius to derive its other attributes. I instead start with the habitable
+	// range and derive anything else needed from that. Since some objects may be small and dense but be less habitable,
+	// the habitable and mass values can be defined separately.
 	// radius^3 / 25 = habitable
-	// The old system editor used an image's radius to calculate its mass and habitable range.
-	// That is, higher radius equals higher mass and higher habitable range. An issue
-	// arises though with small but dense objects like neutron stars; these should have
-	// low habitable ranges but high masses. As such, habitable range and mass are split.
+	// radius^3 / 4 = mass
+	// radius = Math.pow(habitable * 25, 1./3.);
+	// radius = Math.pow(mass * 4, 1./3.);
 
 	O_SUPERGIANT("o-supergiant", 33450., 33450.), // 1.5x giant
 	O_GIANT("o-giant", 22300., 22300.), // 1.5x above the gap between the next two smallest
@@ -72,7 +73,6 @@ public enum Star {
 	M_8("m8", 135., 135.), // 15
 	M_DWARF("m-dwarf", 35., 35.), // Proportional with m8
 
-
 	L_DWARF("l-dwarf", 30., 30.), // Less than m-dwarf
 	
 	CARBON("carbon", 3000., 3000.),
@@ -81,7 +81,22 @@ public enum Star {
 	NOVA_SMALL("nova-small", 100., 5000.),
 	NEUTRON("neutron", 100., 5000.),
 	WR("wr", 50000., 5000.),
-	SUPER_MASSIVE_BLACK_HOLD("black-hole-core", 10000., 10000.);
+	SUPER_MASSIVE_BLACK_HOLE("black-hole", 100000., 100000.),
+	SMALL_BLACK_HOLe("small-black-hole", 10000., 10000.),
+
+	// Use a higher mass than habitable range so that object periods aren't super high.
+	BROWN_DWARF_L("browndwarf-l-rouge", 10., 20.),
+	BROWN_DWARF_T("browndwarf-t-rouge", 10., 20.),
+	BROWN_DWARF_Y("browndwarf-y-rouge", 10., 20.),
+
+	// Chopping block
+	ROUGE_RADIATING("rogue-radiating", 10., 20.),
+	PROTO_ORANGE("protostar-orange", 370., 370.),
+	PROTO_YELLOW("protostar-yellow", 135., 135.),
+	GIANT("giant", 3450., 3450.),
+
+	// Default value for systems without a known star.
+	DEFAULT("default", 100., 100.);
 
 	private final String name;
 	private final double habitable;
@@ -98,10 +113,11 @@ public enum Star {
 	}
 
 	public double Mass() {
-		// The * 6.25 is a conversion factor. Since the old system editor did everything based off of
-		// the radius value of a star but my formatter bases everything off of the habitable range of
-		// a star, the habitable range needs to be multiplied by 6.25 to get the mass. I could just
-		// multiply the mass value of each enum by 6.25 in their definitions, but that would be work. :(
+		// radius^3 / 25 = habitable
+		// radius^3 / 4 = mass
+		// mass * 6.25 = habitable
+		// I use habitable as the base attribute of stars instead of radius.
+		// I could just multiply the mass value of each enum by 6.25 in their definitions, but that would be work. :(
 		return mass * 6.25;
 	}
 
