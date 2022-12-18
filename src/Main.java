@@ -1,24 +1,22 @@
 import objects.*;
-import utils.DataFile;
-import utils.DataNode;
-import utils.DataObject;
-import utils.DataWriter;
+import utils.*;
 
-import java.io.File;
 import java.util.*;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		// Parse the input file into data nodes.
-		Scanner reader = new Scanner(new File("input.txt"));
-		DataFile file = new DataFile(reader);
-		reader.close();
+		DataFile file = new DataFile("input.txt");
 
 		// Tree maps sort the keys without any extra effort needed.
 		Map<String, DataObject> galaxies = new TreeMap<>();
 		Map<String, DataObject> systems = new TreeMap<>();
-		Map<String, DataObject> planets = new TreeMap<>();
-		Map<String, DataObject> wormholes = new TreeMap<>();
+		// We want to interweave the list of wormholes and planets, so use the same map for each.
+		// Wormholes typically share the name of the planet that uses them, so pair them together as to avoid
+		// one overwriting the other. I could also use a multimap for this, but that isn't in java.util and I don't
+		// and to fight dependencies right now, so I'm just copying over a Pair class I've used in other projects.
+		// first = planet, second = wormhole.
+		Map<String, Couple<DataObject>> planets = new TreeMap<>();
 
 		// Sort the root nodes into the above maps while constructing them into objects that can be saved out.
 		for(DataNode node : file.GetRootNodes()) {
@@ -28,8 +26,8 @@ public class Main {
 			switch(key) {
 				case "galaxy" -> galaxies.put(value, new Galaxy(node));
 				case "system" -> systems.put(value, new SolarSystem(node));
-				case "planet" -> planets.put(value, new Planet(node));
-				case "wormhole" -> wormholes.put(value, new Wormhole(node));
+				case "planet" -> planets.computeIfAbsent(value, k -> new Couple<>()).first = new Planet(node);
+				case "wormhole" -> planets.computeIfAbsent(value, k -> new Couple<>()).second = new Wormhole(node);
 				default -> System.out.println("Skipping unrecognized root: " + key);
 			}
 		}
@@ -64,10 +62,12 @@ public class Main {
 			galaxy.Save(out);
 		for(DataObject system : systems.values())
 			system.Save(out);
-		for(DataObject planet : planets.values())
-			planet.Save(out);
-		for(DataObject wormhole : wormholes.values())
-			wormhole.Save(out);
+		for(Couple<DataObject> planet : planets.values()) {
+			if(planet.first != null)
+				planet.first.Save(out);
+			if(planet.second != null)
+				planet.second.Save(out);
+		}
 		out.PrintSave();
 	}
 }

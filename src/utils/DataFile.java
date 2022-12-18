@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.util.*;
 
 public class DataFile {
@@ -7,7 +8,8 @@ public class DataFile {
 	// This ensures that the root node never gets popped off the stack.
 	private final DataNode root = new DataNode(-1, new ArrayList<>());
 
-	public DataFile(Scanner fileReader) throws Exception {
+	public DataFile(String path) throws Exception {
+		Scanner fileReader = new Scanner(new File(path));
 		// Add the root node to the bottom of the stack.
 		Stack<DataNode> nodeStack = new Stack<>();
 		nodeStack.push(root);
@@ -28,6 +30,7 @@ public class DataFile {
 			nodeStack.peek().GetChildren().add(node);
 			nodeStack.add(node);
 		}
+		fileReader.close();
 	}
 
 	public List<DataNode> GetRootNodes() {
