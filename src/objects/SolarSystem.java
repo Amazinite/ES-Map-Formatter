@@ -170,6 +170,8 @@ public class SolarSystem extends DataObject {
 				out.WriteTokens("fleet", fleet.name, Format.valueOf(fleet.value));
 			for(NamedInt hazard : hazards)
 				out.WriteTokens("hazard", hazard.name, Format.valueOf(hazard.value));
+			// Sort stellar objects by distance.
+			objects.sort(Comparator.comparingDouble(StellarObject::Distance));
 			for(StellarObject object : objects)
 				object.Save(out);
 		}

@@ -6,10 +6,7 @@ import utils.DataObject;
 import utils.DataWriter;
 import utils.Format;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class StellarObject extends DataObject {
 	private String name = "";
@@ -56,6 +53,8 @@ public class StellarObject extends DataObject {
 				out.WriteTokens("period", Format.valueOf(period));
 			if(offset != 0)
 				out.WriteTokens("offset", Format.valueOf(offset));
+			// Sort moons by distance.
+			objects.sort(Comparator.comparingDouble(StellarObject::Distance));
 			for(StellarObject object : objects)
 				object.Save(out);
 		}
@@ -79,5 +78,9 @@ public class StellarObject extends DataObject {
 	public boolean IsStar() {
 		// Rouge brown dwarves are in the planet folder but act as stars.
 		return sprite.GetPath().contains("star/") || sprite.GetPath().contains("rouge");
+	}
+
+	public double Distance() {
+		return distance;
 	}
 }
