@@ -28,5 +28,4 @@ replay_pid*
 *.iml
 
 # Input and output files
-input.txt
-map.txt
+*.txt
