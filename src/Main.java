@@ -15,7 +15,7 @@ public class Main {
 		// first = planet, second = wormhole.
 		Map<String, Couple<DataObject>> planets = new TreeMap<>();
 
-		List<String> files = Arrays.asList("input.txt");
+		List<String> files = Arrays.asList("input systems.txt", "input planets.txt");
 		for(String filePath : files) {
 			// Parse the input file into data nodes.
 			DataFile file = new DataFile(filePath);
