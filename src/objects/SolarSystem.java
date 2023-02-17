@@ -147,7 +147,7 @@ public class SolarSystem extends DataObject {
 			}
 			if(hyperDeparture > 0 || jumpDeparture > 0) {
 				if(hyperDeparture == jumpDeparture)
-					out.WriteTokens("departure", Format.valueOf(hyperArrival));
+					out.WriteTokens("departure", Format.valueOf(hyperDeparture));
 				else {
 					out.WriteTokens("departure");
 					out.BeginChild();
