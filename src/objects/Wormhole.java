@@ -11,6 +11,7 @@ public class Wormhole extends DataObject {
 	private String name;
 	private boolean mappable = false;
 	private List<String> links = new ArrayList<>();
+	private String color = "";
 
 	public Wormhole(DataNode node) {
 		Load(node);
@@ -21,11 +22,18 @@ public class Wormhole extends DataObject {
 		name = node.GetToken(1);
 		for(DataNode child : node.GetChildren()) {
 			String key = child.GetToken(0);
-			if(key.equals("mappable"))
-				mappable = true;
-			else if(key.equals("link")) {
-				links.add(child.GetToken(1));
-				links.add(child.GetToken(2));
+			switch(key) {
+				case "mappable" -> mappable = true;
+				case "link" -> {
+					links.add(child.GetToken(1));
+					links.add(child.GetToken(2));
+				}
+				case "color" -> {
+					color = child.GetToken(1);
+					if(child.Size() > 2)
+						System.out.println("TODO: Support RGB color input.");
+				}
+				default -> System.out.println("Skipping unrecognized node: " + key);
 			}
 		}
 	}
@@ -39,6 +47,8 @@ public class Wormhole extends DataObject {
 				out.WriteTokens("mappable");
 			for(int i = 0; i < links.size(); )
 				out.WriteTokens("link", links.get(i++), links.get(i++));
+			if(!color.isEmpty())
+				out.WriteTokens("color", color);
 		}
 		out.EndChild();
 		out.NewLine();
