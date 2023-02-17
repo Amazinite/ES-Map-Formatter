@@ -21,6 +21,8 @@ public class Sprite extends DataObject {
 			String key = child.GetToken(0);
 			if(key.equals("scale"))
 				scale = child.GetDouble(1);
+			else
+				System.out.println("Skipping unrecognized node: " + key);
 		}
 	}
 

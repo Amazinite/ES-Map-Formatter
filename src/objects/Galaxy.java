@@ -25,7 +25,8 @@ public class Galaxy extends DataObject {
 				y = child.GetDouble(2);
 			} else if(key.equals("sprite")) {
 				sprite = new Sprite(child);
-			}
+			} else
+				System.out.println("Skipping unrecognized node: " + key);
 		}
 	}
 
