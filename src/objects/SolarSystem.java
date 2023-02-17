@@ -20,6 +20,10 @@ public class SolarSystem extends DataObject {
 	private double jumpArrival;
 	private double hyperDeparture;
 	private double jumpDeparture;
+	private boolean ramscoopSettings = false;
+	private boolean ramscoopUniversal = true;
+	private double ramscoopAddend = 0.;
+	private double ramscoopMultiplier = 1.;
 	private double habitable;
 	private List<Belt> belts = new ArrayList<>();
 	private double jumpRange;
@@ -72,6 +76,22 @@ public class SolarSystem extends DataObject {
 							hyperDeparture = child.GetDouble(1);
 						else if(grand.GetToken(0).equals("jump"))
 							jumpDeparture = child.GetDouble(1);
+					}
+				}
+				case "ramscoop" -> {
+					for(DataNode grand : child.GetChildren()) {
+						String grandKey = grand.GetToken(0);
+						if(grand.Size() < 2) {
+							System.out.println("Skipping ramscoop key \"" + grandKey + "\" with no value.");
+							continue;
+						}
+						double grandVal = grand.GetDouble(1);
+						switch(grandKey) {
+							case "universal" -> ramscoopUniversal = (grandVal == 1.);
+							case "addend" -> ramscoopAddend = grandVal;
+							case "multiplier" -> ramscoopMultiplier = grandVal;
+						}
+						ramscoopSettings = true;
 					}
 				}
 				case "habitable" -> habitable = child.GetDouble(1);
@@ -139,6 +159,16 @@ public class SolarSystem extends DataObject {
 					}
 					out.EndChild();
 				}
+			}
+			if(ramscoopSettings) {
+				out.WriteTokens("ramscoop");
+				out.BeginChild();
+				{
+					out.WriteTokens("universal", Format.valueOf(ramscoopUniversal ? 1 : 0));
+					out.WriteTokens("addend", Format.valueOf(ramscoopAddend));
+					out.WriteTokens("multiplier", Format.valueOf(ramscoopMultiplier));
+				}
+				out.EndChild();
 			}
 			if(habitable > 0)
 				out.WriteTokens("habitable", Format.valueOf(habitable));
