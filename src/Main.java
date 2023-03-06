@@ -1,6 +1,7 @@
 import objects.*;
 import utils.*;
 
+import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -15,13 +16,15 @@ public class Main {
 		// first = planet, second = wormhole.
 		Map<String, Couple<DataObject>> planets = new TreeMap<>();
 
-		List<String> files = Arrays.asList("input systems.txt", "input planets.txt");
-		for(String filePath : files) {
+		File input = new File("input");
+		for(File file : input.listFiles()) {
+			if(file == null || !file.isFile())
+				continue;
 			// Parse the input file into data nodes.
-			DataFile file = new DataFile(filePath);
+			DataFile data = new DataFile(file);
 
 			// Sort the root nodes into the above maps while constructing them into objects that can be saved out.
-			for(DataNode node : file.GetRootNodes()) {
+			for(DataNode node : data.GetRootNodes()) {
 				if(node.Size() == 0) continue;
 				String key = node.GetToken(0);
 				String value = node.GetToken(1);

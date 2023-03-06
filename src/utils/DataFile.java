@@ -8,8 +8,8 @@ public class DataFile {
 	// This ensures that the root node never gets popped off the stack.
 	private final DataNode root = new DataNode(-1, new ArrayList<>());
 
-	public DataFile(String path) throws Exception {
-		Scanner fileReader = new Scanner(new File(path));
+	public DataFile(File file) throws Exception {
+		Scanner fileReader = new Scanner(file);
 		// Add the root node to the bottom of the stack.
 		Stack<DataNode> nodeStack = new Stack<>();
 		nodeStack.push(root);
