@@ -58,7 +58,7 @@ public class Planet extends DataObject {
 				case "bribe" -> bribe = child.GetDouble(1);
 				case "security" -> security = child.GetDouble(1);
 				case "wormhole" -> wormhole = child.GetToken(1);
-				default -> System.out.println("Skipping unrecognized node: " + key);
+				default -> System.out.println("Skipping unrecognized planet node: " + key);
 			}
 		}
 	}

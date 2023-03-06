@@ -33,7 +33,7 @@ public class Main {
 					case "system" -> systems.put(value, new SolarSystem(node));
 					case "planet" -> planets.computeIfAbsent(value, k -> new Couple<>()).first = new Planet(node);
 					case "wormhole" -> planets.computeIfAbsent(value, k -> new Couple<>()).second = new Wormhole(node);
-					default -> System.out.println("Skipping unrecognized root: " + key);
+					default -> System.out.println("Skipping unrecognized root node: " + key);
 				}
 			}
 		}

@@ -26,7 +26,7 @@ public class Galaxy extends DataObject {
 			} else if(key.equals("sprite")) {
 				sprite = new Sprite(child);
 			} else
-				System.out.println("Skipping unrecognized node: " + key);
+				System.out.println("Skipping unrecognized galaxy node: " + key);
 		}
 	}
 

@@ -9,6 +9,9 @@ public class Sprite extends DataObject {
 	private String name;
 	private String path;
 	private double scale;
+	private double frameRate;
+	private boolean randomStartFrame;
+
 	public Sprite(DataNode node) {
 		Load(node);
 	}
@@ -19,10 +22,12 @@ public class Sprite extends DataObject {
 		name = path.substring(path.indexOf("/") + 1);
 		for(DataNode child : node.GetChildren()) {
 			String key = child.GetToken(0);
-			if(key.equals("scale"))
-				scale = child.GetDouble(1);
-			else
-				System.out.println("Skipping unrecognized node: " + key);
+			switch(key) {
+				case "random start frame" -> randomStartFrame = true;
+				case "frame rate" -> frameRate = child.GetDouble(1);
+				case "scale" -> scale = child.GetDouble(1);
+				default -> System.out.println("Skipping unrecognized sprite node: " + key);
+			}
 		}
 	}
 
@@ -31,6 +36,10 @@ public class Sprite extends DataObject {
 		out.WriteTokens("sprite", path);
 		out.BeginChild();
 		{
+			if(randomStartFrame)
+				out.WriteTokens("random start frame");
+			if(frameRate != 0)
+				out.WriteTokens("frame rate", Format.valueOf(scale));
 			if(scale > 0)
 				out.WriteTokens("scale", Format.valueOf(scale));
 		}

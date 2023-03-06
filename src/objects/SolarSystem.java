@@ -105,7 +105,7 @@ public class SolarSystem extends DataObject {
 				case "fleet" -> fleets.add(new NamedInt(child.GetToken(1), child.GetInt(2)));
 				case "hazard" -> hazards.add(new NamedInt(child.GetToken(1), child.GetInt(2)));
 				case "object" -> objects.add(new StellarObject(child));
-				default -> System.out.println("Skipping unrecognized node: " + key);
+				default -> System.out.println("Skipping unrecognized system node: " + key);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public class Wormhole extends DataObject {
 					links.add(child.GetToken(1));
 					links.add(child.GetToken(2));
 				}
-				default -> System.out.println("Skipping unrecognized node: " + key);
+				default -> System.out.println("Skipping unrecognized wormhole node: " + key);
 			}
 		}
 	}

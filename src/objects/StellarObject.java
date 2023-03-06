@@ -32,7 +32,7 @@ public class StellarObject extends DataObject {
 				case "period" -> period = child.GetDouble(1);
 				case "offset" -> offset = child.GetDouble(1);
 				case "object" -> objects.add(new StellarObject(child));
-				default -> System.out.println("Skipping unrecognized node: " + key);
+				default -> System.out.println("Skipping unrecognized object node: " + key);
 			}
 		}
 	}
