@@ -45,10 +45,10 @@ public class Wormhole extends DataObject {
 		{
 			if(mappable)
 				out.WriteTokens("mappable");
-			for(int i = 0; i < links.size(); )
-				out.WriteTokens("link", links.get(i++), links.get(i++));
 			if(!color.isEmpty())
 				out.WriteTokens("color", color);
+			for(int i = 0; i < links.size(); )
+				out.WriteTokens("link", links.get(i++), links.get(i++));
 		}
 		out.EndChild();
 		out.NewLine();
