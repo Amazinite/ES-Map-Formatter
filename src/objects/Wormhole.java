@@ -24,14 +24,14 @@ public class Wormhole extends DataObject {
 			String key = child.GetToken(0);
 			switch(key) {
 				case "mappable" -> mappable = true;
+				case "link" -> {
+					links.add(child.GetToken(1));
+					links.add(child.GetToken(2));
+				}
 				case "color" -> {
 					color = child.GetToken(1);
 					if(child.Size() > 2)
 						System.out.println("TODO: Support RGB color input.");
-				}
-				case "link" -> {
-					links.add(child.GetToken(1));
-					links.add(child.GetToken(2));
 				}
 				default -> System.out.println("Skipping unrecognized wormhole node: " + key);
 			}
@@ -45,10 +45,10 @@ public class Wormhole extends DataObject {
 		{
 			if(mappable)
 				out.WriteTokens("mappable");
-			if(!color.isEmpty())
-				out.WriteTokens("color", color);
 			for(int i = 0; i < links.size(); )
 				out.WriteTokens("link", links.get(i++), links.get(i++));
+			if(!color.isEmpty())
+				out.WriteTokens("color", color);
 		}
 		out.EndChild();
 		out.NewLine();
