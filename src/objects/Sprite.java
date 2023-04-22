@@ -39,7 +39,7 @@ public class Sprite extends DataObject {
 			if(randomStartFrame)
 				out.WriteTokens("random start frame");
 			if(frameRate != 0)
-				out.WriteTokens("frame rate", Format.valueOf(scale));
+				out.WriteTokens("frame rate", Format.valueOf(frameRate));
 			if(scale > 0)
 				out.WriteTokens("scale", Format.valueOf(scale));
 		}
