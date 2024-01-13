@@ -12,7 +12,7 @@ public class DataWriter {
 	private boolean forceBacktick = false;
 
 	public DataWriter(String path, String header) {
-		this.path = path;
+		this.path = "output\\" + path;
 		// Comments don't get parsed, so add the copyright header if it was provided.
 		if(header != null)
 			builder.append(header);

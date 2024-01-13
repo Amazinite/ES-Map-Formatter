@@ -26,6 +26,7 @@ replay_pid*
 # IDE related
 .idea/*
 *.iml
+/out/
 
 # Input and output files
 *.txt
