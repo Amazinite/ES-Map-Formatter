@@ -90,6 +90,7 @@ public class SolarSystem extends DataObject {
 							case "universal" -> ramscoopUniversal = (grandVal == 1.);
 							case "addend" -> ramscoopAddend = grandVal;
 							case "multiplier" -> ramscoopMultiplier = grandVal;
+							default -> System.out.println("Skipping unrecognized ramscoop node: " + key);
 						}
 						ramscoopSettings = true;
 					}

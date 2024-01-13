@@ -56,6 +56,7 @@ public class Planet extends DataObject {
 						switch(grand.GetToken(0)) {
 							case "threshold" -> threshold = grand.GetInt(1);
 							case "fleet" -> fleets.add(new Fleet(grand.GetToken(1), grand.GetInt(2)));
+							default -> System.out.println("Skipping unrecognized tribute node: " + key);
 						}
 					}
 				}

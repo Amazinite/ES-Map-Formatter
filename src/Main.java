@@ -12,12 +12,12 @@ public class Main {
 		// We want to interweave the list of wormholes and planets, so use the same map for each.
 		// Wormholes typically share the name of the planet that uses them, so pair them together as to avoid
 		// one overwriting the other. I could also use a multimap for this, but that isn't in java.util and I don't
-		// and to fight dependencies right now, so I'm just copying over a Pair class I've used in other projects.
+		// want to fight dependencies right now, so I'm just copying over a Pair class I've used in other projects.
 		// first = planet, second = wormhole.
 		Map<String, Couple<DataObject>> planets = new TreeMap<>();
 
 		File input = new File("input");
-		for(File file : input.listFiles()) {
+		for(File file : Objects.requireNonNull(input.listFiles())) {
 			if(file == null || !file.isFile())
 				continue;
 			// Parse the input file into data nodes.

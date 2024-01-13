@@ -26,6 +26,7 @@ public class Port extends DataObject {
 				case "services" -> services.addAll(child.GetTokensPast(1));
 				case "news" -> news = true;
 				case "description" -> description.add(child.GetToken(1));
+				default -> System.out.println("Skipping unrecognized port node: " + key);
 			}
 		}
 	}
