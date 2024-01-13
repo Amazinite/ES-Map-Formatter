@@ -86,9 +86,9 @@ public enum Star {
 	COAL_BLACK_HOLE("coal-black-hole", 10000., 10000.),
 
 	// Use a higher mass than habitable range so that object periods aren't super high.
-	BROWN_DWARF_L("browndwarf-l-rouge", 10., 20.),
-	BROWN_DWARF_T("browndwarf-t-rouge", 10., 20.),
-	BROWN_DWARF_Y("browndwarf-y-rouge", 10., 20.),
+	BROWN_DWARF_L("browndwarf-l-rogue", 10., 20.),
+	BROWN_DWARF_T("browndwarf-t-rogue", 10., 20.),
+	BROWN_DWARF_Y("browndwarf-y-rogue", 10., 20.),
 
 	// Chopping block
 	ROUGE_RADIATING("rogue-radiating", 10., 20.),
