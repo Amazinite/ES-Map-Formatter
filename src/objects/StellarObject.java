@@ -77,7 +77,14 @@ public class StellarObject extends DataObject {
 
 	public boolean IsStar() {
 		// Rouge brown dwarves are in the planet folder but act as stars.
-		return sprite.GetPath().contains("star/") || sprite.GetPath().contains("rouge");
+		return sprite.GetPath().contains("star/") || sprite.GetPath().contains("rogue");
+	}
+
+	/**
+	 * Special objects don't have their orbital periods recalibrated.
+	 */
+	public boolean IsSpecial() {
+		return sprite.GetPath().contains("vajra/vajra");
 	}
 
 	public double Distance() {

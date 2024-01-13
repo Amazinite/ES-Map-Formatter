@@ -232,7 +232,7 @@ public class SolarSystem extends DataObject {
 
 		habitable = sumHabitable;
 		for(StellarObject object : objects)
-			if(!object.IsStar())
+			if(!object.IsStar() && !object.IsSpecial())
 				object.CalibratePeriod(sumMass);
 	}
 
