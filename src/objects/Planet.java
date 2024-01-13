@@ -25,6 +25,7 @@ public class Planet extends DataObject {
 	private double bribe = 0.01;
 	private double security = 0.25;
 	private String wormhole = "";
+	private Port port;
 
 	public Planet(DataNode node) {
 		Load(node);
@@ -43,6 +44,10 @@ public class Planet extends DataObject {
 				case "government" -> government = child.GetToken(1);
 				case "description" -> description.add(child.GetToken(1));
 				case "spaceport" -> spaceport.add(child.GetToken(1));
+				case "port" -> {
+					port = new Port();
+					port.Load(child);
+				}
 				case "shipyard" -> shipyards.add(child.GetToken(1));
 				case "outfitter" -> outfitters.add(child.GetToken(1));
 				case "tribute" -> {
@@ -78,15 +83,15 @@ public class Planet extends DataObject {
 			if(!music.isEmpty())
 				out.WriteTokens("music", music);
 			for(String line : description) {
-				// TODO: Diff-minimizing change. Remove later, or decide if it should stay.
 				out.ForceBacktick();
 				out.WriteTokens("description", line);
 			}
 			for(String line : spaceport) {
-				// TODO: Diff-minimizing change. Remove later, or decide if it should stay.
 				out.ForceBacktick();
 				out.WriteTokens("spaceport", line);
 			}
+			if(port != null)
+				port.Save(out);
 			if(!government.isEmpty())
 				out.WriteTokens("government", government);
 			for(String shipyard : shipyards)
