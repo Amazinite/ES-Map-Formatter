@@ -39,16 +39,10 @@ public class Port extends DataObject {
 			out.WriteTokens("port");
 		out.BeginChild();
 		{
-			if(!recharges.isEmpty()) {
-				recharges.sort(String::compareTo);
-				recharges.add(0, "recharges");
-				out.WriteTokens(recharges);
-			}
-			if(!services.isEmpty()) {
-				services.sort(String::compareTo);
-				services.add(0, "services");
-				out.WriteTokens(services);
-			}
+			if(!recharges.isEmpty())
+				out.WriteSortedTokens("recharges", recharges);
+			if(!services.isEmpty())
+				out.WriteSortedTokens("services", services);
 			if(news)
 				out.WriteTokens("news");
 			for(String line : description) {

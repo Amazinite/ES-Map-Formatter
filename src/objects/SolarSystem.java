@@ -122,11 +122,8 @@ public class SolarSystem extends DataObject {
 			if(!government.isEmpty())
 				out.WriteTokens("government", government);
 			if(!attributes.isEmpty()) {
-				// TODO: Diff-minimizing change. Remove later, or decide if it should stay.
 				out.ForceQuote();
-				attributes.sort(String::compareTo);
-				attributes.add(0, "attributes");
-				out.WriteTokens(attributes);
+				out.WriteSortedTokens("attributes", attributes);
 			}
 			if(!music.isEmpty())
 				out.WriteTokens("music", music);

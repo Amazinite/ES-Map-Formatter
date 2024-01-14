@@ -74,11 +74,8 @@ public class Planet extends DataObject {
 		out.WriteTokens("planet", name);
 		out.BeginChild();
 		{
-			if(!attributes.isEmpty()) {
-				attributes.sort(String::compareTo);
-				attributes.add(0, "attributes");
-				out.WriteTokens(attributes);
-			}
+			if(!attributes.isEmpty())
+				out.WriteSortedTokens("attributes", attributes);
 			if(!landscape.isEmpty())
 				out.WriteTokens("landscape", landscape);
 			if(!music.isEmpty())
