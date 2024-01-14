@@ -19,7 +19,7 @@ public class DataWriter {
 	}
 
 	public void NewLine() {
-		builder.append("\n");
+		builder.append("\r\n");
 	}
 
 	public void WriteTokens(String... tokens) {
