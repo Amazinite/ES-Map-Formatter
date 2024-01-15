@@ -44,10 +44,7 @@ public class Planet extends DataObject {
 				case "government" -> government = child.GetToken(1);
 				case "description" -> description.add(child.GetToken(1));
 				case "spaceport" -> spaceport.add(child.GetToken(1));
-				case "port" -> {
-					port = new Port();
-					port.Load(child);
-				}
+				case "port" -> port = new Port(child);
 				case "shipyard" -> shipyards.add(child.GetToken(1));
 				case "outfitter" -> outfitters.add(child.GetToken(1));
 				case "tribute" -> {

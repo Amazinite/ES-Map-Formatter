@@ -14,6 +14,10 @@ public class Port extends DataObject {
 	private boolean news = false;
 	private List<String> description = new ArrayList<>();
 
+	public Port(DataNode node) {
+		Load(node);
+	}
+
 	@Override
 	public void Load(DataNode node) {
 		if(node.Size() > 1)
@@ -33,9 +37,10 @@ public class Port extends DataObject {
 
 	@Override
 	public void Save(DataWriter out) {
-		if(name != null)
+		if(name != null) {
+			out.ForceQuote();
 			out.WriteTokens("port", name);
-		else
+		} else
 			out.WriteTokens("port");
 		out.BeginChild();
 		{
