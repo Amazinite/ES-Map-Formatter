@@ -6,16 +6,18 @@ import java.util.*;
 public class DataFile {
 	// Create a node stack with a root node that has a depth of -1, which no actual node could have.
 	// This ensures that the root node never gets popped off the stack.
-	private final DataNode root = new DataNode(-1, new ArrayList<>());
+	private final DataNode root = new DataNode();
 
 	public DataFile(File file) throws Exception {
 		Scanner fileReader = new Scanner(file);
 		// Add the root node to the bottom of the stack.
 		Stack<DataNode> nodeStack = new Stack<>();
 		nodeStack.push(root);
+		int lineNum = -1;
 
 		while(fileReader.hasNext()) {
 			String line = fileReader.nextLine();
+			++lineNum;
 			// Skip blank lines, as they contain no tokens.
 			if(line.isBlank())
 				continue;
@@ -25,9 +27,12 @@ public class DataFile {
 			while(nodeStack.peek().GetDepth() >= depth)
 				nodeStack.pop();
 
-			// Create a new node, add it as a child of the node at the top of the stack, then add it to the stack.
-			DataNode node = new DataNode(depth, TokenizeLine(line));
-			nodeStack.peek().GetChildren().add(node);
+			// Get the node at the top of the stack, i.e. the parent of the new node.
+			DataNode parent = nodeStack.peek();
+
+			// Create a new node, add it as a child of its parent, then add it to the stack.
+			DataNode node = new DataNode(parent, depth, TokenizeLine(line), file.getName(), lineNum);
+			parent.GetChildren().add(node);
 			nodeStack.add(node);
 		}
 		fileReader.close();
