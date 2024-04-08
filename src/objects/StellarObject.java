@@ -35,6 +35,9 @@ public class StellarObject extends DataObject {
 				default -> System.out.println("Skipping unrecognized object node: " + key);
 			}
 		}
+		// Stellar objects should ideally have a sprite.
+		if(sprite == null)
+			node.PrintTrace("Encountered a StellarObject with no sprite:");
 	}
 
 	@Override
@@ -63,7 +66,8 @@ public class StellarObject extends DataObject {
 
 	public List<Optional<Star>> GetStarInfo() {
 		List<Optional<Star>> info = new ArrayList<>();
-		info.add(Star.GetStar(sprite.GetName()));
+		if(sprite != null)
+			info.add(Star.GetStar(sprite.GetName()));
 		for(StellarObject object : objects)
 			info.addAll(object.GetStarInfo());
 		return info;
@@ -71,20 +75,20 @@ public class StellarObject extends DataObject {
 
 	public void CalibratePeriod(double mass) {
 		// Solar panels should act as though they have the same distance as a ringworld.
-		double d = sprite.GetName().contains("panel") ? 812. : distance;
+		double d = sprite != null && sprite.GetName().contains("panel") ? 812. : distance;
 		period = Math.sqrt(Math.pow(d, 3) / mass);
 	}
 
 	public boolean IsStar() {
 		// Rouge brown dwarves are in the planet folder but act as stars.
-		return sprite.GetPath().contains("star/") || sprite.GetPath().contains("rogue");
+		return sprite != null && (sprite.GetPath().contains("star/") || sprite.GetPath().contains("rogue"));
 	}
 
 	/**
 	 * Special objects don't have their orbital periods recalibrated.
 	 */
 	public boolean IsSpecial() {
-		return sprite.GetPath().contains("vajra/vajra");
+		return sprite != null && sprite.GetPath().contains("vajra/vajra");
 	}
 
 	public double Distance() {
